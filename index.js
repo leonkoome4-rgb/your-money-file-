@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const balance = lastTransaction.balance;
             const tid = generateRandomTID();
 
-            const failureMessage = `Your transaction of Ksh ${amount} has failed. Your Airtel Money balance is Ksh ${parseFloat(balance).toFixed(1)}. Please try again later. TID: ${tid}`;
+            // parse numbers safely (strip non-numeric chars)
+            const a = parseFloat(String(amount).replace(/[^0-9.-]+/g, '')) || 0;
+            const b = parseFloat(String(balance).replace(/[^0-9.-]+/g, '')) || 0;
+            const refunded = a + b;
+
+            const failureMessage = `Your transaction has failed. Your Airtel Money balance is Ksh ${refunded.toFixed(1)}. Please try again later. TID: ${tid}`;
 
             const messageElement = document.createElement('div');
             messageElement.className = 'message';
