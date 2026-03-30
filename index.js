@@ -25,6 +25,35 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
         });
     }
+
+    // Ensure mobile taps on the Send button submit reliably
+    const form = document.getElementById('transactionForm');
+    const sendBtn = document.getElementById('sendBtn');
+    let _touchHandled = false;
+
+    if (sendBtn && form) {
+        sendBtn.addEventListener('touchstart', function(e) {
+            // Prevent the synthetic click following touch on some devices
+            e.preventDefault();
+            _touchHandled = true;
+            if (typeof form.requestSubmit === 'function') {
+                form.requestSubmit();
+            } else {
+                form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            }
+            // reset flag shortly after
+            setTimeout(() => { _touchHandled = false; }, 600);
+        }, { passive: false });
+
+        // Avoid duplicate submit when touch triggers a click afterward
+        sendBtn.addEventListener('click', function(e) {
+            if (_touchHandled) {
+                e.preventDefault();
+                return;
+            }
+            // otherwise allow normal click -> form submit
+        });
+    }
 });
 
 document.getElementById('transactionForm').addEventListener('submit', function(event) {

@@ -98,7 +98,7 @@ body {
     border-top: 1px solid #c6c6c8;
     position: sticky;
     bottom: 0;
-    z-index: 10;
+    z-index: 20;
 }
 
 form {
@@ -139,6 +139,7 @@ button {
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    pointer-events: auto;
     font-size: 1em;
     font-weight: 500;
     -webkit-tap-highlight-color: transparent;
