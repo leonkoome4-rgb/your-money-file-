@@ -26,32 +26,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Ensure mobile taps on the Send button submit reliably
+    // Ensure mobile taps on the Send button submit reliably across browsers
     const form = document.getElementById('transactionForm');
     const sendBtn = document.getElementById('sendBtn');
-    let _touchHandled = false;
 
     if (sendBtn && form) {
-        sendBtn.addEventListener('touchstart', function(e) {
-            // Prevent the synthetic click following touch on some devices
-            e.preventDefault();
-            _touchHandled = true;
-            if (typeof form.requestSubmit === 'function') {
-                form.requestSubmit();
-            } else {
-                form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-            }
-            // reset flag shortly after
-            setTimeout(() => { _touchHandled = false; }, 600);
-        }, { passive: false });
+        // Use pointer events where available — more consistent across platforms
+        sendBtn.addEventListener('pointerdown', function (e) {
+            // Only handle primary pointer (finger or primary mouse button)
+            if (e.isPrimary === false) return;
 
-        // Avoid duplicate submit when touch triggers a click afterward
-        sendBtn.addEventListener('click', function(e) {
-            if (_touchHandled) {
+            // Prevent multiple quick submissions by disabling the button temporarily
+            if (sendBtn.disabled) {
                 e.preventDefault();
                 return;
             }
-            // otherwise allow normal click -> form submit
+
+            try {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                }
+            } catch (err) {
+                // fallback to native submit if something goes wrong
+                try { form.submit(); } catch (e) { /* ignore */ }
+            }
+
+            sendBtn.disabled = true;
+            setTimeout(() => { sendBtn.disabled = false; }, 700);
+        }, { passive: true });
+
+        // Also ensure normal clicks behave (desktop/backwards compatibility)
+        sendBtn.addEventListener('click', function (e) {
+            if (sendBtn.disabled) {
+                e.preventDefault();
+                return;
+            }
+            // let the form submit naturally via click
         });
     }
 });
