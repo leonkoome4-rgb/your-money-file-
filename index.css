@@ -26,7 +26,7 @@ body {
     padding: 15px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -36,6 +36,10 @@ body {
 
 .contact-info {
     text-align: left;
+}
+
+.contact-name#emergencyBtn {
+    cursor: pointer;
 }
 
 .contact-name {
@@ -107,7 +111,7 @@ form {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-input {
+input, textarea {
     flex-grow: 1;
     border: none;
     outline: none;
@@ -118,7 +122,13 @@ input {
     appearance: none;
 }
 
-input::placeholder {
+textarea {
+    height: 52px;
+    padding: 10px 0;
+    resize: none;
+}
+
+input::placeholder, textarea::placeholder {
     color:black;
 }
 

@@ -1,16 +1,59 @@
+let lastTransaction = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     generateRandomMessages(10);
+
+    const emergencyBtn = document.getElementById('emergencyBtn');
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', function() {
+            if (!lastTransaction) {
+                alert('No transaction available to report.');
+                return;
+            }
+
+            const amount = lastTransaction.amount;
+            const balance = lastTransaction.balance;
+            const tid = generateRandomTID();
+
+            const failureMessage = `Your transaction of Ksh ${amount} has failed. Your Airtel Money balance is Ksh ${parseFloat(balance).toFixed(1)}. Please try again later. TID: ${tid}`;
+
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            messageElement.textContent = failureMessage;
+
+            document.querySelector('.chat-body').appendChild(messageElement);
+            document.querySelector('.chat-body').scrollTop = document.querySelector('.chat-body').scrollHeight;
+        });
+    }
 });
 
 document.getElementById('transactionForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const name = document.getElementById('name').value.toUpperCase();
-    const amount = document.getElementById('amount').value;
-    const number = document.getElementById('number').value;
-    const balance = document.getElementById('balance').value;
+    const raw = document.getElementById('bulkInput').value || '';
+    // Expecting comma-separated values in this order:
+    // recipient number, amount, recipient number, current balance
+    let parts = raw.split(',').map(p => p.trim()).filter(p => p.length);
+
+    if (parts.length < 4) {
+        // fallback: split on whitespace if user didn't use commas
+        parts = raw.split(/\s+/).map(p => p.trim()).filter(p => p.length);
+    }
+
+    if (parts.length < 4) {
+        alert('Please enter 4 values: recipient number, amount, recipient number, current balance (comma-separated).');
+        return;
+    }
+
+    const name = parts[0].toUpperCase();
+    const amount = parts[1];
+    const number = parts[2];
+    const balance = parts[3];
 
     addMessage(name, amount, number, balance);
+
+    // store last transaction for emergency reporting
+    lastTransaction = { amount, balance };
 
     // Clear form
     event.target.reset();
