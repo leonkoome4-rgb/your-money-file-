@@ -26,7 +26,7 @@ body {
     padding: 15px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -36,10 +36,6 @@ body {
 
 .contact-info {
     text-align: left;
-}
-
-.contact-name#emergencyBtn {
-    cursor: pointer;
 }
 
 .contact-name {
@@ -80,6 +76,11 @@ body {
     line-height: 1.4;
 }
 
+.recipient-number {
+    color: #0056cc;
+    font-weight: 700;
+}
+
 .message::after {
     content: '';
     position: absolute;
@@ -98,7 +99,7 @@ body {
     border-top: 1px solid #c6c6c8;
     position: sticky;
     bottom: 0;
-    z-index: 20;
+    z-index: 10;
 }
 
 form {
@@ -111,7 +112,7 @@ form {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-input, textarea {
+input {
     flex-grow: 1;
     border: none;
     outline: none;
@@ -122,13 +123,7 @@ input, textarea {
     appearance: none;
 }
 
-textarea {
-    height: 52px;
-    padding: 10px 0;
-    resize: none;
-}
-
-input::placeholder, textarea::placeholder {
+input::placeholder {
     color:black;
 }
 
@@ -139,7 +134,6 @@ button {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    pointer-events: auto;
     font-size: 1em;
     font-weight: 500;
     -webkit-tap-highlight-color: transparent;
@@ -170,4 +164,55 @@ button:active {
     .chat-footer {
         padding-bottom: max(8px, env(safe-area-inset-bottom));
     }
+}
+
+/* Safaricom-styled mode */
+body.safaricom-mode {
+    background-color: grey;
+    color: black;
+}
+
+body.safaricom-mode .message {
+    color: black;
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+/* Reset recipient number style for Mode B */
+body.safaricom-mode .message .recipient-number {
+    color:light blue ;
+    font-weight: bold;
+}
+
+/* Style for the toggle button */
+#toggleMode {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+#toggleMode:hover {
+    background-color: #0056b3;
+}
+
+/* Style for the mode indicator */
+.mode-indicator {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    font-size: 0.8em;
+    color: white;
+    background-color: #333;
+    padding: 3px 8px;
+    border-radius: 3px;
+    z-index: 20;
 }

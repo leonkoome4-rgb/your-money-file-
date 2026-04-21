@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Money </title>
+    <title>Mobile Money Chat</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="chat-app">
+        <button id="toggleMode">..</button>
+        <div class="mode-indicator" id="modeIndicator">Mode: Default</div>
         <div class="chat-header">
             <div class="contact-info">
-                <div class="contact-name" id="emergencyBtn">Mpesa</div>
+                <div class="contact-name">Mpesa</div>
                 <div class="contact-status"></div>
             </div>
         </div>
@@ -19,8 +21,11 @@
         </div>
         <div class="chat-footer">
             <form id="transactionForm">
-                <textarea id="bulkInput" placeholder="Enter: recipient name , amount, recipient number, current balance" required></textarea>
-                <button id="sendBtn" type="submit">Send</button>
+                <input type="text" id="name" placeholder="Recipient Name" reuired>
+                <input type="number" id="amount" placeholder="Amount (Ksh)" required>
+                <input  type="text" id="number" placeholder="Recipient Number" required>
+                <input type="number" id="balance" step="0.01" placeholder="Current Balance (Ksh)" required>
+                <button type="submit">Send</button>
             </form>
         </div>
     </div>
