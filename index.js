@@ -5,10 +5,23 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('transactionForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const name = document.getElementById('name').value.toUpperCase();
-    const amount = document.getElementById('amount').value;
-    const number = document.getElementById('number').value;
-    const balance = document.getElementById('balance').value;
+    const input = document.getElementById('dataInput').value;
+    const parts = input.split(',').map(part => part.trim());
+
+    if (parts.length !== 4) {
+        alert('Please enter exactly 4 values separated by commas: Name, Amount, Number, Balance');
+        return;
+    }
+
+    const name = parts[0].toUpperCase();
+    const amount = parseFloat(parts[1]);
+    const number = parts[2];
+    const balance = parseFloat(parts[3]);
+
+    if (isNaN(amount) || isNaN(balance)) {
+        alert('Amount and Balance must be numbers');
+        return;
+    }
 
     addMessage(name, amount, number, balance);
 
@@ -74,9 +87,9 @@ function addMessage(name, amount, number, balance) {
     // Format the message
     let message;
     if (safaricomMode) {
-        message = `${tid1} Confirmed. Ksh${amount}.00 sent to ${name} <span class="recipient-number">${number}</span> on ${date} at ${time}. New M-PESA balance is Ksh${parseFloat(balance).toFixed(2)}. Transaction cost, Ksh${fee}.00.  Amount you can transact within the day is 475,500.00. Earn interest daily on Ziidi MMF,Dial *334#`;
+        message = `${tid1} Confirmed. Ksh${amount.toLocaleString()}.00 sent to ${name} <span class="recipient-number">${number}</span> on ${date} at ${time}. New M-PESA balance is Ksh${parseFloat(balance).toFixed(2).toLocaleString()}. Transaction cost, Ksh${fee.toLocaleString()}.00.  Amount you can transact within the day is 475,500.00. Earn interest daily on Ziidi MMF,Dial *334#`;
     } else {
-        message = `${tid1}. Ksh ${amount} sent to ${name} <span class="recipient-number">${number}</span> on ${date} at ${time}. Fee: Ksh ${fee}. Bal: Ksh ${parseFloat(balance).toFixed(1)}. Receiving TID: ${tid1}.`;
+        message = `${tid1}. Ksh ${amount.toLocaleString()} sent to ${name} <span class="recipient-number">${number}</span> on ${date} at ${time}. Fee: Ksh ${fee.toLocaleString()}. Bal: Ksh ${parseFloat(balance).toFixed(1).toLocaleString()}. Receiving TID: ${tid1}.`;
     }
 
     console.log('Generated Message:', message); // Debug log
