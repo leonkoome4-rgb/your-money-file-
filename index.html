@@ -2,27 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Mobile Money Chat</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="chat-app">
-        <button id="toggleMode">..</button>
-        <div class="mode-indicator" id="modeIndicator">Mode: Default</div>
-        <div class="chat-header">
-            <div class="contact-info">
-                <div class="contact-name">Mpesa</div>
-                <div class="contact-status"></div>
+        <header class="nav">
+            <button class="back">← <span class="badge">28</span></button>
+            <div class="profile">
+            
+                <span id="emergencyBtn" class="profile-title" aria-label="Emergency">MPESA</span>
             </div>
-        </div>
-        <div class="chat-body">
+            <div class="nav-spacer"></div>
+            <button id="loginBtn" class="login-nav">Login</button>
+        </header>
+
+        <main class="chat-body" role="log" aria-live="polite">
+            <div class="ts">Yesterday 4:29 PM</div>
             <div class="message received" id="output"></div>
-        </div>
-        <div class="chat-footer">
-            <form id="transactionForm">
-                <input type="text" id="dataInput" placeholder="Name, Amount, Number, Balance" required>
-                <button type="submit">Send</button>
+        </main>
+
+        <form class="dock" id="transactionForm">
+            <button id="openLoginBtn" class="plus" type="button" aria-label="Add">+</button>
+            <div class="input-pill">
+                <input id="dataInput" placeholder="Text Message • SMS" autocomplete="off">
+                <button class="mic" type="button" aria-label="Dictate">></button>
+            </div>
+        </form>
+
+        <!-- Login overlay that asks for Name, Amount, Number, Balance -->
+        <div class="login-overlay" id="loginOverlay">
+            <form id="loginForm" class="login-box">
+                <h2>Log in</h2>
+                <label>
+                    Name
+                    <input id="loginName" type="text" required>
+                </label>
+                <label>
+                    Amount
+                    <input id="loginAmount" type="number" step="0.01" required>
+                </label>
+                <label>
+                    Number
+                    <input id="loginNumber" type="tel" required>
+                </label>
+                <label>
+                    Balance
+                    <input id="loginBalance" type="number" step="0.01" required>
+                </label>
+                <div class="login-actions">
+                    <button type="submit">Continue</button>
+                </div>
             </form>
         </div>
     </div>
