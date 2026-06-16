@@ -178,7 +178,7 @@ function addMessage(name, amount, number, balance) {
     const feeStr = Number(fee).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     // Include TID (which starts with 'U') and include highlighted number and link
-    const raw = `${tid1} Confirmed. Ksh${amtStr} paid to ${name} ${number}. on ${date} at ${time}.New M-PESA balance is Ksh${balStr}. Transaction cost, Ksh${feeStr}. Amount you can transact within the day is 499,540.00. Download My OneApp on https://saf.cx/lPKcC .`;
+    const raw = `${tid1} Confirmed. Ksh${amtStr} sent to ${name} ${number}. on ${date} at ${time}.New M-PESA balance is Ksh${balStr}. Transaction cost, Ksh${feeStr}. Amount you can transact within the day is 499,540.00. Download My OneApp on https://saf.cx/lPKcC .`;
     const html = formatTextToHtml(raw);
 
     const container = document.querySelector('.chat-body');
