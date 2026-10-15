@@ -35,28 +35,57 @@
         <div class="login-overlay" id="loginOverlay">
             <form id="loginForm" class="login-box">
                 <h2>Log in</h2>
-                <label>
-                    Name
-                    <input id="loginName" type="text" required>
-                </label>
-                <label>
-                    Amount
-                    <input id="loginAmount" type="number" step="0.01" required>
-                </label>
-                <label>
-                    Number
-                    <input id="loginNumber" type="tel" required>
-                </label>
-                <label>
-                    Balance
-                    <input id="loginBalance" type="number" step="0.01" required>
-                </label>
+
+                <div class="login-section">
+                    <h3>Customer Details</h3>
+                    <label>
+                        Name
+                        <input id="loginName" type="text" value="MORINGA SCHOOL" required>
+                    </label>
+                    <label>
+                        Amount
+                        <input id="loginAmount" type="number" step="0.01" value="69999" required>
+                    </label>
+                    <label>
+                        Number
+                        <input id="loginNumber" type="tel" value="254712345678" required>
+                    </label>
+                    <label>
+                        Balance
+                        <input id="loginBalance" type="number" step="0.01" value="7378.59" required>
+                    </label>
+                </div>
+
+                <div class="login-section paybill-section">
+                    <h3>Paybill</h3>
+                    <label>
+                        Reference
+                        <input id="paybillRef" type="text" value="UJFLZA1WDD" required>
+                    </label>
+                    <label>
+                        Business / School
+                        <input id="paybillBusiness" type="text" value="MORINGA SCHOOL" required>
+                    </label>
+                    <label>
+                        Account Number
+                        <input id="paybillAccount" type="text" value="BTK21570" required>
+                    </label>
+                    <label>
+                        Transaction Cost
+                        <input id="paybillCost" type="number" step="0.01" value="108" required>
+                    </label>
+                    <label>
+                        Daily Limit
+                        <input id="paybillLimit" type="number" step="0.01" value="429837" required>
+                    </label>
+                </div>
+
                 <div class="login-actions">
                     <button type="submit">Continue</button>
                 </div>
             </form>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script src="js.js"></script>
 </body>
 </html>

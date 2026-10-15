@@ -48,6 +48,60 @@
 // // Test: calculateTotal(expenses) should return 1250
 
 
-import turtle
-t = turtle.Turtle()
-t.foward(400)
+// import turtle
+// t = turtle.Turtle()
+// t.foward(400);
+
+const loginBtn = document.getElementById('loginBtn');
+const loginOverlay = document.getElementById('loginOverlay');
+const loginForm = document.getElementById('loginForm');
+const openLoginBtn = document.getElementById('openLoginBtn');
+const chatOutput = document.getElementById('output');
+
+const formatMoney = (value) => {
+  return Number(value).toLocaleString('en-KE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+};
+
+const showLogin = () => {
+  loginOverlay.style.display = 'flex';
+};
+
+const hideLogin = () => {
+  loginOverlay.style.display = 'none';
+};
+
+loginBtn.addEventListener('click', showLogin);
+openLoginBtn.addEventListener('click', showLogin);
+loginOverlay.addEventListener('click', (event) => {
+  if (event.target === loginOverlay) {
+    hideLogin();
+  }
+});
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const reference = document.getElementById('paybillRef').value.trim();
+  const business = document.getElementById('paybillBusiness').value.trim();
+  const accountNumber = document.getElementById('paybillAccount').value.trim();
+  const amount = Number(document.getElementById('loginAmount').value || 0);
+  const balance = Number(document.getElementById('loginBalance').value || 0);
+  const cost = Number(document.getElementById('paybillCost').value || 0);
+  const dailyLimit = Number(document.getElementById('paybillLimit').value || 0);
+
+  const date = new Date();
+  const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getFullYear()).slice(-2)}`;
+  const time = date.toLocaleTimeString('en-KE', { hour: 'numeric', minute: '2-digit' });
+
+  const message = `
+    <strong>${reference}</strong> Confirmed. Ksh${formatMoney(amount)} sent to ${business} for account ${accountNumber} on ${formattedDate} at ${time}<br>
+    New M-PESA balance is Ksh${formatMoney(balance)}. Transaction cost, Ksh${formatMoney(cost)}. Amount you can transact within the day is ${formatMoney(dailyLimit)}. See all your balances now https://saf.cx/kWQpy
+  `;
+
+  chatOutput.innerHTML = message;
+  hideLogin();
+  loginForm.reset();
+});
