@@ -11,7 +11,6 @@
         <header class="nav">
             <button class="back">← <span class="badge">28</span></button>
             <div class="profile">
-            
                 <span id="emergencyBtn" class="profile-title" aria-label="Emergency">MPESA</span>
             </div>
             <div class="nav-spacer"></div>
@@ -31,53 +30,77 @@
             </div>
         </form>
 
-        <!-- Login overlay that asks for Name, Amount, Number, Balance -->
         <div class="login-overlay" id="loginOverlay">
-            <form id="loginForm" class="login-box">
-                <h2>Log in</h2>
+            <form id="loginForm" class="login-box" data-mode="send-money">
+                <h2>New transaction</h2>
 
-                <div class="login-section">
-                    <h3>Customer Details</h3>
-                    <label>
-                        Name
-                        <input id="loginName" type="text" value="MORINGA SCHOOL" required>
-                    </label>
-                    <label>
-                        Amount
-                        <input id="loginAmount" type="number" step="0.01" value="69999" required>
-                    </label>
-                    <label>
-                        Number
-                        <input id="loginNumber" type="tel" value="254712345678" required>
-                    </label>
-                    <label>
-                        Balance
-                        <input id="loginBalance" type="number" step="0.01" value="7378.59" required>
-                    </label>
+                <div class="type-switch" aria-label="Transaction type switch">
+                    <button type="button" class="type-tab active" data-type="send-money">Send Money</button>
+                    <button type="button" class="type-tab" data-type="paybill">Paybill</button>
                 </div>
 
-                <div class="login-section paybill-section">
-                    <h3>Paybill</h3>
-                    <label>
-                        Reference
-                        <input id="paybillRef" type="text" value="UJFLZA1WDD" required>
-                    </label>
-                    <label>
-                        Business / School
-                        <input id="paybillBusiness" type="text" value="MORINGA SCHOOL" required>
-                    </label>
-                    <label>
-                        Account Number
-                        <input id="paybillAccount" type="text" value="BTK21570" required>
-                    </label>
-                    <label>
-                        Transaction Cost
-                        <input id="paybillCost" type="number" step="0.01" value="108" required>
-                    </label>
-                    <label>
-                        Daily Limit
-                        <input id="paybillLimit" type="number" step="0.01" value="429837" required>
-                    </label>
+                <div class="transaction-panel active" data-panel="send-money">
+                    <div class="login-section">
+                        <h3>Send Money</h3>
+                        <label>
+                            Receiver Name
+                            <input id="recipientName" type="text" value="Jane Wanjiku" required>
+                        </label>
+                        <label>
+                            Phone Number
+                            <input id="recipientPhone" type="tel" value="0712345678" required>
+                        </label>
+                        <label>
+                            Amount
+                            <input id="sendAmount" type="number" step="0.01" value="2500" required>
+                        </label>
+                        <label>
+                            New Balance
+                            <input id="sendBalance" type="number" step="0.01" value="12345.50" required>
+                        </label>
+                        <label>
+                            Transaction Cost
+                            <input id="sendCost" type="number" step="0.01" value="10" required>
+                        </label>
+                        <label>
+                            Daily Limit
+                            <input id="sendLimit" type="number" step="0.01" value="240000" required>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="transaction-panel" data-panel="paybill">
+                    <div class="login-section paybill-section">
+                        <h3>Paybill</h3>
+                        <label>
+                            Reference
+                            <input id="paybillRef" type="text" value="UJFLZA1WDD" required>
+                        </label>
+                        <label>
+                            Business / School
+                            <input id="paybillBusiness" type="text" value="MORINGA SCHOOL" required>
+                        </label>
+                        <label>
+                            Account Number
+                            <input id="paybillAccount" type="text" value="BTK21570" required>
+                        </label>
+                        <label>
+                            Amount
+                            <input id="paybillAmount" type="number" step="0.01" value="69999" required>
+                        </label>
+                        <label>
+                            New Balance
+                            <input id="paybillBalance" type="number" step="0.01" value="7378.59" required>
+                        </label>
+                        <label>
+                            Transaction Cost
+                            <input id="paybillCost" type="number" step="0.01" value="108" required>
+                        </label>
+                        <label>
+                            Daily Limit
+                            <input id="paybillLimit" type="number" step="0.01" value="429837" required>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="login-actions">
