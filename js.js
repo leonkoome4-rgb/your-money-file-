@@ -74,6 +74,28 @@ const formatShortMoney = (value) => {
   });
 };
 
+const getCurrentDateValue = () => {
+  const now = new Date();
+  return now.toISOString().split('T')[0];
+};
+
+const getCurrentTimeValue = () => {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
+const setDefaultDateTime = () => {
+  const defaultDate = getCurrentDateValue();
+  const defaultTime = getCurrentTimeValue();
+
+  document.getElementById('sendDate').value = defaultDate;
+  document.getElementById('sendTime').value = defaultTime;
+  document.getElementById('paybillDate').value = defaultDate;
+  document.getElementById('paybillTime').value = defaultTime;
+};
+
 const showLogin = () => {
   loginOverlay.style.display = 'flex';
 };
@@ -113,8 +135,8 @@ loginForm.addEventListener('submit', (event) => {
 
   const mode = loginForm.dataset.mode || 'send-money';
   const date = new Date();
-  const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getFullYear()).slice(-2)}`;
-  const time = date.toLocaleTimeString('en-KE', { hour: 'numeric', minute: '2-digit' });
+  const todayDate = getCurrentDateValue();
+  const todayTime = getCurrentTimeValue();
 
   let message = '';
 
@@ -126,9 +148,17 @@ loginForm.addEventListener('submit', (event) => {
     const balance = Number(document.getElementById('paybillBalance').value || 0);
     const cost = Number(document.getElementById('paybillCost').value || 0);
     const dailyLimit = Number(document.getElementById('paybillLimit').value || 0);
+    const selectedDate = document.getElementById('paybillDate').value || todayDate;
+    const selectedTime = document.getElementById('paybillTime').value || todayTime;
+
+    const formattedDate = selectedDate.split('-').reverse().join('/');
+    const formattedTime = new Date(`2000-01-01T${selectedTime}:00`).toLocaleTimeString('en-KE', {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
 
     message = `
-      <strong>${reference}</strong> Confirmed. Ksh${formatMoney(amount)} sent to ${business} for account ${accountNumber} on ${formattedDate} at ${time}<br>
+      <strong>${reference}</strong> Confirmed. Ksh${formatMoney(amount)} sent to ${business} for account ${accountNumber} on ${formattedDate} at ${formattedTime}<br>
       New M-PESA balance is Ksh${formatMoney(balance)}. Transaction cost, Ksh${formatMoney(cost)}. Amount you can transact within the day is ${formatShortMoney(dailyLimit)}. See all your balances now <a href="https://saf.cx/kWQpy" class="mpesa-link" target="_blank" rel="noreferrer">https://saf.cx/kWQpy</a>
     `;
   } else {
@@ -138,11 +168,18 @@ loginForm.addEventListener('submit', (event) => {
     const balance = Number(document.getElementById('sendBalance').value || 0);
     const cost = Number(document.getElementById('sendCost').value || 0);
     const dailyLimit = Number(document.getElementById('sendLimit').value || 0);
+    const selectedDate = document.getElementById('sendDate').value || todayDate;
+    const selectedTime = document.getElementById('sendTime').value || todayTime;
 
     const shortPhone = phone.replace(/^254/, '0');
+    const formattedDate = selectedDate.split('-').reverse().join('/');
+    const formattedTime = new Date(`2000-01-01T${selectedTime}:00`).toLocaleTimeString('en-KE', {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
 
     message = `
-      <strong>MPESA</strong> Confirmed. Ksh${formatMoney(amount)} sent to ${recipient} ${shortPhone} on ${formattedDate} at ${time}<br>
+      <strong>MPESA</strong> Confirmed. Ksh${formatMoney(amount)} sent to ${recipient} ${shortPhone} on ${formattedDate} at ${formattedTime}<br>
       New M-PESA balance is Ksh${formatMoney(balance)}. Transaction cost, Ksh${formatMoney(cost)}. Amount you can transact within the day is ${formatShortMoney(dailyLimit)}. See all your balances now <a href="https://saf.cx/MPESA" class="mpesa-link" target="_blank" rel="noreferrer">https://saf.cx/MPESA</a>
     `;
   }
@@ -150,7 +187,9 @@ loginForm.addEventListener('submit', (event) => {
   chatOutput.innerHTML = message;
   hideLogin();
   loginForm.reset();
+  setDefaultDateTime();
   setMode('send-money');
 });
 
+setDefaultDateTime();
 setMode('send-money');
