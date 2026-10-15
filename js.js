@@ -134,9 +134,22 @@ loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const mode = loginForm.dataset.mode || 'send-money';
-  const date = new Date();
   const todayDate = getCurrentDateValue();
   const todayTime = getCurrentTimeValue();
+
+  if (mode === 'paybill') {
+    const paybillDateInput = document.getElementById('paybillDate');
+    const paybillTimeInput = document.getElementById('paybillTime');
+
+    if (!paybillDateInput.value) paybillDateInput.value = todayDate;
+    if (!paybillTimeInput.value) paybillTimeInput.value = todayTime;
+  } else {
+    const sendDateInput = document.getElementById('sendDate');
+    const sendTimeInput = document.getElementById('sendTime');
+
+    if (!sendDateInput.value) sendDateInput.value = todayDate;
+    if (!sendTimeInput.value) sendTimeInput.value = todayTime;
+  }
 
   let message = '';
 
